@@ -8,9 +8,9 @@ import play.db.jpa.Model;
 @Entity
 public class Hero extends Model {
 	@Id
-	private long id;
-	private String name;
-	private String localized_name;
+	public long id;
+	public String name;
+	public String localized_name;
 	
 	public String get_sb_img(){
 		String img_path = "http://cdn.dota2.com/apps/dota2/images/heroes/"+this.name.replace("npc_dota_hero_", "");

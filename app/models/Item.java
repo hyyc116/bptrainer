@@ -8,12 +8,12 @@ import play.db.jpa.Model;
 public class Item extends Model {
 	private String name;
 	@Id
-	private Long id;
-	private int cost;
-	private int secret_shop;
-	private int side_shop;
-	private String localized_name;
-	private int recipe;
+	public Long id;
+	public int cost;
+	public int secret_shop;
+	public int side_shop;
+	public String localized_name;
+	public int recipe;
 	
 	public String get_img_path(){
 		return "http://cdn.dota2.com/apps/dota2/images/items/"+name.replace("item_", "")+"_lg.png";

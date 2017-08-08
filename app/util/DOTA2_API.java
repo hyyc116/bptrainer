@@ -19,7 +19,7 @@ public class DOTA2_API {
 	public static Crawler crawler = Crawler.getInstance();
 	
 	
-	public String get_content(String url){
+	public static String get_content(String url){
 		try {
 			crawler.crawl(url);
 		} catch (IOException e) {
@@ -28,14 +28,14 @@ public class DOTA2_API {
 		return crawler.getContent();
 	}
 	
-	public String get_json(String url){
+	public static String get_json(String url){
 		String json_str = get_content(url);
 		System.out.println(json_str);
 		return json_str;
 	}
 	
 	//Get Hero List
-	public List<Hero> update_heros_list(){
+	public static List<Hero> update_heros_list(){
 		String url = String.format("https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=%s&language=zh_cn",ConstantVar.API_KEY);
 		String content = get_content(url);
 		List<Hero> heroes = new ArrayList<Hero>();
@@ -48,7 +48,7 @@ public class DOTA2_API {
 	}
 	
 	// get item List
-	public List<Item> update_item_list(){
+	public static List<Item> update_item_list(){
 		String url = "https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key="+ConstantVar.API_KEY+"&language=zh_cn";
 		url = String.format(url,ConstantVar.API_KEY);
 		String content = get_content(url);
@@ -60,7 +60,7 @@ public class DOTA2_API {
 	}
 	
 	// 获取比赛记录
-	public void get_match_history(String league_id,String game_mode){
+	public static void get_match_history(String league_id,String game_mode){
 		String url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v0001/?key="+ConstantVar.API_KEY+"&min_players=10";
 		StringBuilder urlStr = new StringBuilder(url);
 		if(league_id!=null){
@@ -82,7 +82,7 @@ public class DOTA2_API {
 		}
 	}
 	
-	public void get_match_history_by_seq_num(String league_id,String game_mode,long start_match_id){
+	public static void get_match_history_by_seq_num(String league_id,String game_mode,long start_match_id){
 		String url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/?key="+ConstantVar.API_KEY+"&min_players=10";
 		StringBuilder urlStr = new StringBuilder(url);
 		if(league_id!=null){
@@ -112,13 +112,13 @@ public class DOTA2_API {
 	
 	
 	// 获得所有的比赛名
-	public void get_League_list(){
+	public static void get_League_list(){
 		String url = "https://api.steampowered.com/IDOTA2Match_570/GetLeagueListing/v0001/?key="+ConstantVar.API_KEY;
 		System.out.println(url);
 	}
 	
 	//获取比赛详情
-	public void get_match_detail(String match_id){
+	public static void get_match_detail(String match_id){
 		String url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id="+match_id+"&key="+ConstantVar.API_KEY;
 		System.out.println(url);
 	}

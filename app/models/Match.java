@@ -11,17 +11,17 @@ import play.db.jpa.Model;
 @Entity
 public class Match extends Model{
 	
-	private int series_id;
-	private int series_type;
-	private long match_id;
-	private long match_seq_num;
-	private long start_time;
-	private int radiant_team_id;
-	private int dire_team_id;
-	private int lobby_time;
+	public int series_id;
+	public int series_type;
+	public long match_id;
+	public long match_seq_num;
+	public long start_time;
+	public int radiant_team_id;
+	public int dire_team_id;
+	public int lobby_time;
 	
 	@OneToMany
-	private List<Player> players = new ArrayList<Player>();
+	public List<Player> players = new ArrayList<Player>();
 
 	public int getSeries_id() {
 		return series_id;

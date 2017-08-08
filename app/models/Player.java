@@ -7,9 +7,9 @@ import play.db.jpa.Model;
 @Entity
 public class Player extends Model{
 	
-	private long account_id;
-	private int player_slot;
-	private int hero_id;
+	public long account_id;
+	public int player_slot;
+	public int hero_id;
 	
 	public long getAccount_id() {
 		return account_id;

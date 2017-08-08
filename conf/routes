@@ -14,4 +14,6 @@ GET     /public/                                staticDir:public
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
 
+# get all heros
+GET /update_heroes					Application.updateHeroes
 
