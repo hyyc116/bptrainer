@@ -1,15 +1,18 @@
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import play.db.jpa.Model;
+import play.db.jpa.GenericModel;
 
 @Entity
-public class Hero extends Model {
+public class Hero extends GenericModel {
+	
 	@Id
-	public long id;
+	public Long id;
 	public String name;
+	@Column(name = "lname")
 	public String localized_name;
 	
 	public String get_sb_img(){
@@ -32,7 +35,6 @@ public class Hero extends Model {
 		return img_path+"_vert.jpg";
 	}
 
-	@Override
 	public Long getId() {
 		return id;
 	}

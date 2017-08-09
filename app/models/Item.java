@@ -1,17 +1,22 @@
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import play.db.jpa.Model;
+import play.db.jpa.GenericModel;
 @Entity
-public class Item extends Model {
+public class Item extends GenericModel {
+	
 	private String name;
 	@Id
 	public Long id;
 	public int cost;
+	@Column(name="secrets")
 	public int secret_shop;
+	@Column(name="sides")
 	public int side_shop;
+	@Column(name="lname")
 	public String localized_name;
 	public int recipe;
 	

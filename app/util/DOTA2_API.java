@@ -12,7 +12,7 @@ import commons.ConstantVar;
 import models.Hero;
 import models.ResponseObj;
 import models.Item;
-import models.Match;
+import models.MatchObj;
 
 public class DOTA2_API {
 	
@@ -75,9 +75,9 @@ public class DOTA2_API {
 		System.out.println("URL:"+url);
 		String content = get_content(url);
 		ResponseObj history = JSON.parseObject(content, ResponseObj.class);
-		List<Match> matches = history.getResult().getMatches();
+		List<MatchObj> matches = history.getResult().getMatches();
 		System.out.println("Size of Result:"+matches.size());
-		for(Match match: matches){
+		for(MatchObj match: matches){
 			System.out.println(match.getMatch_id()+"\t"+match.getStart_time()+"\t"+Utility.get_date(match.getStart_time()));
 		}
 	}
@@ -101,10 +101,10 @@ public class DOTA2_API {
 		System.out.println("URL:"+url);
 		String content = get_content(url);
 		ResponseObj history = JSON.parseObject(content, ResponseObj.class);
-		List<Match> matches = history.getResult().getMatches();
+		List<MatchObj> matches = history.getResult().getMatches();
 		System.out.println("Size of Result:"+matches.size());
 		System.out.println("Total Result:"+history.getResult().getTotal_results());
-		for(Match match: matches){
+		for(MatchObj match: matches){
 			System.out.println(match.getMatch_id()+"\t"+match.getStart_time()+"\t"+Utility.get_date(match.getStart_time()));
 		}
 	}

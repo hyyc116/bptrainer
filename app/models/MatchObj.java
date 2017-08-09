@@ -3,24 +3,33 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import play.db.jpa.Model;
 
 @Entity
-public class Match extends Model{
+public class MatchObj extends Model{
 	
+	@Column(name="sid")
 	public int series_id;
+	@Column(name="st")
 	public int series_type;
+	@Column(name="mid")
 	public long match_id;
+	@Column(name="msu")
 	public long match_seq_num;
+	@Column(name="stm")
 	public long start_time;
+	@Column(name="rti")
 	public int radiant_team_id;
+	@Column(name="dti")
 	public int dire_team_id;
+	@Column(name="lt")
 	public int lobby_time;
 	
-	@OneToMany
+	@ManyToMany
 	public List<Player> players = new ArrayList<Player>();
 
 	public int getSeries_id() {

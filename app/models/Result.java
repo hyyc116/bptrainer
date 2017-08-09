@@ -9,7 +9,7 @@ public class Result {
 	private int num_results;
 	private int total_results;
 	private int results_remaining;
-	private List<Match> matches  = new ArrayList<Match>();
+	private List<MatchObj> matches  = new ArrayList<MatchObj>();
 	private List<Hero> heroes = new ArrayList<Hero>();
 	private List<Item> Items = new ArrayList<Item>();
 	
@@ -37,10 +37,10 @@ public class Result {
 	public void setResults_remaining(int results_remaining) {
 		this.results_remaining = results_remaining;
 	}
-	public List<Match> getMatches() {
+	public List<MatchObj> getMatches() {
 		return matches;
 	}
-	public void setMatches(List<Match> matches) {
+	public void setMatches(List<MatchObj> matches) {
 		this.matches = matches;
 	}
 	public List<Hero> getHeroes() {

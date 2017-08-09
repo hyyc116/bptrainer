@@ -1,6 +1,10 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 import play.db.jpa.Model;
 
@@ -10,6 +14,9 @@ public class Player extends Model{
 	public long account_id;
 	public int player_slot;
 	public int hero_id;
+	
+	@ManyToMany(mappedBy="players")
+	public List<MatchObj> matches = new ArrayList<MatchObj>();
 	
 	public long getAccount_id() {
 		return account_id;
@@ -28,6 +35,12 @@ public class Player extends Model{
 	}
 	public void setHero_id(int hero_id) {
 		this.hero_id = hero_id;
+	}
+	public List<MatchObj> getMatches() {
+		return matches;
+	}
+	public void setMatches(List<MatchObj> matches) {
+		this.matches = matches;
 	}
 	
 	

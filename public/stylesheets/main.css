@@ -1,0 +1,20 @@
+li{
+	display:block;
+	float: left;
+	position: relative;
+}
+.item_shows{
+	width:800;
+	margin: auto;
+	text-align: center;
+	clear:both;
+}
+img.hero_img{
+	width: 150px;
+	height:75px;
+}
+
+img.item_img{
+	width:80px;
+	height:60px;
+}
