@@ -12,11 +12,8 @@ public class Item extends GenericModel {
 	@Id
 	public Long id;
 	public int cost;
-	@Column(name="secrets")
 	public int secret_shop;
-	@Column(name="sides")
 	public int side_shop;
-	@Column(name="lname")
 	public String localized_name;
 	public int recipe;
 	

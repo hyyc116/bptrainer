@@ -12,7 +12,6 @@ public class Hero extends GenericModel {
 	@Id
 	public Long id;
 	public String name;
-	@Column(name = "lname")
 	public String localized_name;
 	
 	public String get_sb_img(){

@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+#{set title:'Heroes and Items' /}
+
+<a href="@{Application.getPreHistory(last_match)}">NEXT PAGE</a>
+<div class="item_shows">
+<h1>Matches (${total})</h1>
+	#{list items:results, as:'result'}
+	<ul>
+		<li>${result.match_id}</li>
+		<li>===</li>
+		<li>${result.start_time}</li>
+		<li>===</li>	
+		#{list items:result.radianHeros, as:'hero'}
+		<li>
+			<img src="${hero.get_sb_img()}" />
+		</li>
+		#{/list}
+		<li>vs.</li>
+		#{list items:result.direHeros, as:'hero'}
+		<li>
+			<img src="${hero.get_sb_img()}"/>
+		</li>
+		#{/list}
+	</ul>	
+	#{/list}
+</div>
+
+

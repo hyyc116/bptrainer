@@ -12,6 +12,8 @@ public class Result {
 	private List<MatchObj> matches  = new ArrayList<MatchObj>();
 	private List<Hero> heroes = new ArrayList<Hero>();
 	private List<Item> Items = new ArrayList<Item>();
+	private List<League> leagues = new ArrayList<League>();
+//	private List<Player> players = new ArrayList<Player>();
 	
 	public int getStatus() {
 		return status;
@@ -55,5 +57,18 @@ public class Result {
 	public void setItems(List<Item> items) {
 		Items = items;
 	}
+	public List<League> getLeagues() {
+		return leagues;
+	}
+	public void setLeagues(List<League> leagues) {
+		this.leagues = leagues;
+	}
+//	public List<Player> getPlayers() {
+//		return players;
+//	}
+//	public void setPlayers(List<Player> players) {
+//		this.players = players;
+//	}
+	
 	
 }

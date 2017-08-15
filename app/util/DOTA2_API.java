@@ -4,15 +4,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import com.alibaba.fastjson.JSON;
-import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.JsonPath;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import commons.ConstantVar;
+import jdk.nashorn.internal.scripts.JS;
 import models.Hero;
-import models.ResponseObj;
 import models.Item;
+import models.League;
 import models.MatchObj;
+import models.MatchResponse;
+import models.MatchResult;
+import models.ResponseObj;
 
 public class DOTA2_API {
 	
@@ -60,30 +67,8 @@ public class DOTA2_API {
 	}
 	
 	// 获取比赛记录
-	public static void get_match_history(String league_id,String game_mode){
+	public static List<MatchObj> get_match_history(String league_id,String game_mode,long start_match_id,int matches_requested){
 		String url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v0001/?key="+ConstantVar.API_KEY+"&min_players=10";
-		StringBuilder urlStr = new StringBuilder(url);
-		if(league_id!=null){
-			urlStr.append("&league_id=");
-			urlStr.append(league_id);
-		}
-		if(game_mode!=null){
-			urlStr.append("&game_mode=");
-			urlStr.append(game_mode);
-		}
-		url = urlStr.toString();
-		System.out.println("URL:"+url);
-		String content = get_content(url);
-		ResponseObj history = JSON.parseObject(content, ResponseObj.class);
-		List<MatchObj> matches = history.getResult().getMatches();
-		System.out.println("Size of Result:"+matches.size());
-		for(MatchObj match: matches){
-			System.out.println(match.getMatch_id()+"\t"+match.getStart_time()+"\t"+Utility.get_date(match.getStart_time()));
-		}
-	}
-	
-	public static void get_match_history_by_seq_num(String league_id,String game_mode,long start_match_id){
-		String url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/?key="+ConstantVar.API_KEY+"&min_players=10";
 		StringBuilder urlStr = new StringBuilder(url);
 		if(league_id!=null){
 			urlStr.append("&league_id=");
@@ -97,30 +82,53 @@ public class DOTA2_API {
 			urlStr.append("&start_match_id=");
 			urlStr.append(start_match_id);
 		}
+		
+		if(matches_requested!=-1){
+			urlStr.append("&matches_requested=");
+			urlStr.append(matches_requested);
+		}
 		url = urlStr.toString();
 		System.out.println("URL:"+url);
 		String content = get_content(url);
 		ResponseObj history = JSON.parseObject(content, ResponseObj.class);
-		List<MatchObj> matches = history.getResult().getMatches();
-		System.out.println("Size of Result:"+matches.size());
-		System.out.println("Total Result:"+history.getResult().getTotal_results());
-		for(MatchObj match: matches){
-			System.out.println(match.getMatch_id()+"\t"+match.getStart_time()+"\t"+Utility.get_date(match.getStart_time()));
-		}
+		return history.getResult().getMatches();
 	}
 	
-	
+	public static List<MatchObj> get_match_history_by_seq_num(long start_at_match_seq_num,int matches_requested){
+		String url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/?key="+ConstantVar.API_KEY+"&min_players=10";
+		StringBuilder urlStr = new StringBuilder(url);
+		
+		if(start_at_match_seq_num!=-1){
+			urlStr.append("&start_at_match_seq_num=");
+			urlStr.append(start_at_match_seq_num);
+		}
+		if(matches_requested!=-1){
+			urlStr.append("&matches_requested=");
+			urlStr.append(matches_requested);
+		}
+		url = urlStr.toString();
+		System.out.println("URL:"+url);
+		String content = get_content(url);
+		ResponseObj history = JSON.parseObject(content, ResponseObj.class);
+		return history.getResult().getMatches();
+	}
 	
 	// 获得所有的比赛名
-	public static void get_League_list(){
-		String url = "https://api.steampowered.com/IDOTA2Match_570/GetLeagueListing/v0001/?key="+ConstantVar.API_KEY;
-		System.out.println(url);
+	public static List<League> get_League_list(){
+		String url = "https://api.steampowered.com/IDOTA2Match_570/GetLeagueListing/v0001/?key="+ConstantVar.API_KEY+"&language=zh_cn";
+		String content = get_content(url);
+		ResponseObj response = JSON.parseObject(content,ResponseObj.class);
+		return response.getResult().getLeagues();
 	}
 	
 	//获取比赛详情
 	public static void get_match_detail(String match_id){
 		String url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id="+match_id+"&key="+ConstantVar.API_KEY;
 		System.out.println(url);
+		String content = get_content(url);
+//		System.out.println(content);
+		MatchObj match =  JSON.parseObject(content,MatchResponse.class).getResult();
+		match.save();
 	}
 	
 	public static void main(String[] args) {
@@ -129,17 +137,39 @@ public class DOTA2_API {
 //		api.update_heros_list();
 
 		//items
-		api.update_item_list();
+//		api.update_item_list();
 		
 		//match history
-//		api.get_match_history(null,null);
-//		api.get_match_history_by_seq_num(null, null,-1);
+		long last_seq=496;
+		for(int i=0;i<10;i++){
+			System.out.println("======");
+			for(MatchObj match : api.get_match_history_by_seq_num(last_seq,2)){
+				System.out.println(match.getMatch_id());
+//				session.save(match);
+				last_seq = match.getMatch_seq_num();
+//				match.save();
+			}
+		}
+//		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+//		// HeroHome hh = new HeroHome();
+//		Session session = sessionFactory.openSession();
+//		for()
+//		for(MatchObj match : api.get_match_history_by_seq_num(-1,2)){
+//			System.out.println(match.getMatch_id());
+////			session.save(match);
+////			match.save();
+//		}
+//		session.getTransaction().commit();
+//		session.close();
+//		sessionFactory.close();
 		
 		// leagues
 //		api.get_League_list();;
 		
 		// match details
-//		api.get_match_detail("3361918709");
+//		api.get_match_detail("3368387319");
+//		api.get_League_list();
+		
 		
 	}
 		

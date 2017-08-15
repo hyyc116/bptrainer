@@ -1,12 +1,20 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import models.Hero;
+import models.Item;
+import models.MatchObj;
+import models.MatchResult;
+import models.Player;
+import play.mvc.Controller;
 import util.DOTA2_API;
-
-import java.util.*;
-
-import models.*;
+import util.Utility;
 
 public class Application extends Controller {
 
@@ -28,7 +36,6 @@ public class Application extends Controller {
     	int num_of_new_hero = 0;
     	for(Hero hero:heroes){
     		if(!existing_ids.contains(hero.getId())){
-//    			System.out.println(hero.getLocalized_name());
     			hero.save();
     			num_of_new_hero+=1;
     		}
@@ -59,5 +66,6 @@ public class Application extends Controller {
     	
     	render("hero_item.html",num_of_new_hero,num_of_new_items,heroes,show_items);
     }
-
+    
+    
 }
