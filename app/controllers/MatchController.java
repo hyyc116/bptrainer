@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import models.MatchObj;
+import models.Stats;
 import play.mvc.Controller;
 import util.Utility;
 
@@ -17,28 +18,26 @@ public class MatchController extends Controller {
 		Map<Integer, String> mode_dict = Utility.get_mode_dict();
 		Map<Integer, String> cluster_dict = Utility.get_cluster_dict();
 		
+		/*** 获取比赛的统计数据 ***/
+		long stats_id = 10086;
+		Stats stats = Stats.findById(stats_id);
 		// 获取比赛的数量
-		long numberOfMatch = MatchObj.count();
-		List<MatchObj> matches = MatchObj.find("order by start_time asc").fetch();
+		long numberOfMatch = stats.getTotalcount();
 		String start_date = "0";
 		String end_date = "0";
-		if (matches.size() > 0) {
-			start_date = Utility.formatDate(Utility.get_date(matches.get(0).getStart_time()));
-			end_date = Utility.formatDate(Utility.get_date(matches.get(matches.size() - 1).getStart_time()));
+		if (numberOfMatch > 0) {
+			start_date = Utility.formatDate(stats.getStart_time());
+			end_date = Utility.formatDate(stats.getLast_time());
 		}
 		// 对现有模式
-		Map<String, Integer> zone_map = new HashMap<String, Integer>();
-		Map<String, Integer> gm_map = new HashMap<String, Integer>();
-		for (MatchObj match : matches) {
-			String cluster_key = cluster_dict.get((int)match.getCluster());
-			zone_map.put(cluster_key, zone_map.getOrDefault(cluster_key, 0) + 1);
-			String mode_key = mode_dict.get((int)match.getGame_mode());
-			gm_map.put(mode_key, gm_map.getOrDefault(mode_key, 0) + 1);
-		}
+		Map<Integer, Integer> cmap = Utility.strToMap(stats.getCluster_dict());
+		Map<Integer, Integer> gmap = Utility.strToMap(stats.getGm_dict());
+		
+		String update_date = Utility.formatDate(stats.getUpdatetime());
 		
 //		MatchObj.
 		// 区域统计
-		render("all_matches.html", numberOfMatch, start_date, end_date, zone_map, gm_map);
+		render("all_matches.html", numberOfMatch, start_date, end_date, cmap, gmap,mode_dict,cluster_dict,update_date);
 	}
 
 }

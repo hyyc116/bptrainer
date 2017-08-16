@@ -38,4 +38,25 @@ public class Utility {
 		return cluster_dict;
 	}
 
+	public static String mapToStr(Map<Integer, Integer> map) {
+		StringBuilder cluster_str = new StringBuilder();
+		for (int key : map.keySet()) {
+			cluster_str.append(key);
+			cluster_str.append("-");
+			cluster_str.append(map.get(key));
+			cluster_str.append(";");
+		}
+		return cluster_str.toString();
+	}
+
+	public static Map<Integer, Integer> strToMap(String mapstr) {
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		for (String kv : mapstr.split(";")) {
+			String[] k_v = kv.split("-");
+			int key = Integer.parseInt(k_v[0]);
+			int value = Integer.parseInt(k_v[1]);
+			map.put(key, value);
+		}
+		return map;
+	}
 }
