@@ -1,0 +1,39 @@
+#{extends 'main.html' /} #{set title:'Matches Statistics' /}
+
+<div class="item_shows">
+	<h1>Matches (${numberOfMatch})</h1>
+	<h1>Eastern Time Range: ${start_date} - ${end_date}</h1>
+
+
+	<h1>Statistics:</h1>
+	<table align="center" border="1">
+		<tr>
+			<td>Game Mode</td>
+			<td class='value'>Count</td>
+		</tr>
+
+		#{list items:gm_map.keySet(), as:'key'}
+		<tr>
+			<td>${key}</td>
+			<td class='value'>${gm_map.get(key)}</td>
+		</tr>
+		#{/list}
+	</table>
+	
+	
+	<table  align="center" border="1">
+		<tr>
+			<td>Cluster</td>
+			<td>Count</td>
+		</tr>
+
+		#{list items:zone_map.keySet(), as:'key'}
+		<tr>
+			<td>${key}</td>
+			<td class='value'>${zone_map.get(key)}</td>
+		</tr>
+		#{/list}
+	</table>
+</div>
+
+

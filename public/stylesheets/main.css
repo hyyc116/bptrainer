@@ -24,3 +24,17 @@ ul{
 	margin:auto;
 	clear:both;
 }
+
+table{
+	font-size: 50px;
+	width:600px;
+	border-width: 2px;
+	border-style: solid;
+	text-align: center;
+	margin-bottom: 10px;
+}
+td.value{
+	width:200px;
+}
+
+

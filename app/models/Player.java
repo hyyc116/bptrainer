@@ -1,19 +1,17 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import play.db.jpa.Model;
+import play.db.jpa.GenericModel;
 
 @Entity
-public class Player extends Model{
+public class Player extends GenericModel{
 	
+	@Id
+	public long id;
 	public long account_id;
 	public int player_slot;
 	public Long hero_id;
@@ -279,5 +277,24 @@ public class Player extends Model{
 	public void setScaled_hero_healing(int scaled_hero_healing) {
 		this.scaled_hero_healing = scaled_hero_healing;
 	}
+
+	public MatchObj getMatch() {
+		return match;
+	}
+
+	public void setMatch(MatchObj match) {
+		this.match = match;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	
+	
 	
 }

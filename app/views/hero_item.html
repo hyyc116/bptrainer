@@ -2,7 +2,7 @@
 #{set title:'Heroes and Items' /}
 
 <div class="item_shows">
-<h1>HEROES</h1>
+<h1>HEROES(${heroes.size()})</h1>
 <ul>	
 	#{list items:heroes, as:'hero'}
     <li><img src="${hero.get_lg_img()}" alt="${hero.getLocalized_name()}" class="hero_img"/> </li>
@@ -11,7 +11,7 @@
 </div>
 
 <div class="item_shows">
-<h1>ITEMS</h1>
+<h1>ITEMS(${show_items.size()})</h1>
 <ul>	
 	#{list items:show_items, as:'item'}
     <li><img src="${item.get_img_path()}" alt="${item.getLocalized_name()}" class="item_img"/> </li>

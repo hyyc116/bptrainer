@@ -3,26 +3,20 @@ package util;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import java.util.logging.Logger;
 
 import com.alibaba.fastjson.JSON;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import commons.ConstantVar;
-import jdk.nashorn.internal.scripts.JS;
 import models.Hero;
 import models.Item;
 import models.League;
 import models.MatchObj;
 import models.MatchResponse;
-import models.MatchResult;
 import models.ResponseObj;
 
 public class DOTA2_API {
-	
+	private final static Logger LOGGER = Logger.getLogger(DOTA2_API.class.getName());
 	public static Crawler crawler = Crawler.getInstance();
 	
 	
@@ -44,6 +38,7 @@ public class DOTA2_API {
 	//Get Hero List
 	public static List<Hero> update_heros_list(){
 		String url = String.format("https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=%s&language=zh_cn",ConstantVar.API_KEY);
+		System.out.println(url);
 		String content = get_content(url);
 		List<Hero> heroes = new ArrayList<Hero>();
 		ResponseObj response = JSON.parseObject(content,ResponseObj.class);
@@ -107,7 +102,7 @@ public class DOTA2_API {
 			urlStr.append(matches_requested);
 		}
 		url = urlStr.toString();
-		System.out.println("URL:"+url);
+		LOGGER.info("URL:"+url);
 		String content = get_content(url);
 		ResponseObj history = JSON.parseObject(content, ResponseObj.class);
 		return history.getResult().getMatches();
@@ -134,22 +129,22 @@ public class DOTA2_API {
 	public static void main(String[] args) {
 		DOTA2_API api = new DOTA2_API();
 		// heros
-//		api.update_heros_list();
+		api.update_heros_list();
 
 		//items
 //		api.update_item_list();
 		
 		//match history
-		long last_seq=496;
-		for(int i=0;i<10;i++){
-			System.out.println("======");
-			for(MatchObj match : api.get_match_history_by_seq_num(last_seq,2)){
-				System.out.println(match.getMatch_id());
-//				session.save(match);
-				last_seq = match.getMatch_seq_num();
-//				match.save();
-			}
-		}
+//		long last_seq=496;
+//		for(int i=0;i<10;i++){
+//			System.out.println("======");
+//			for(MatchObj match : api.get_match_history_by_seq_num(last_seq,2)){
+//				System.out.println(match.getMatch_id());
+////				session.save(match);
+//				last_seq = match.getMatch_seq_num();
+////				match.save();
+//			}
+//		}
 //		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
 //		// HeroHome hh = new HeroHome();
 //		Session session = sessionFactory.openSession();

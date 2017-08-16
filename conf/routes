@@ -15,12 +15,17 @@ GET     /public/                                staticDir:public
 *       /{controller}/{action}                  {controller}.{action}
 
 # get all heros
-GET /update_heroes					Application.updateHeroes
+GET /heros_items					Application.updateHeroes
+
+## get match statistics
+GET /all_matches	MatchController.matches
+
+
 
 # get latest matches
-GET /matches						Application.getHistory
+# GET /matches						Application.getHistory
 
 # get history by seq num
-GET /seqmatches						HistoryController.getHisBySeqNum
+# GET /seqmatches						HistoryController.getHisBySeqNum
 
 
